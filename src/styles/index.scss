@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  @apply w-full h-full;
+}
+
+#root {
+  @apply transition-all;
+}
+
+button,
+.button {
+  @apply px-4 py-1 rounded-md border-2 border-neutral-200 bg-neutral-100 hover:bg-neutral-200 transition-all;
+}
+
+input {
+  @apply px-2 py-1 rounded-md border-2 border-neutral-200 bg-neutral-100 hover:border-primary focus:border-primary transition-all;
+}
+
+html.dark {
+  #root {
+    @apply text-white bg-black;
+  }
+
+  button,
+  .button {
+    @apply border-neutral-800 bg-neutral-900 hover:bg-neutral-800;
+  }
+
+  input {
+    @apply border-neutral-800 bg-neutral-900;
+  }
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

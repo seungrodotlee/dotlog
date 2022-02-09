@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "rootDir": "src",
+    "outDir": "build"
+  }
+}
