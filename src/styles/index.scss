@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  .text-foreground {
+    @apply text-black;
+  }
+
+  .bg-foreground {
+    @apply bg-black;
+  }
+
+  .border-foreground {
+    @apply border-black;
+  }
+
+  html.dark {
+    .text-foreground {
+      @apply text-white;
+    }
+
+    .bg-foreground {
+      @apply bg-white;
+    }
+
+    .border-foreground {
+      @apply border-white;
+    }
+  }
+}
+
 html,
 body,
 #root {
