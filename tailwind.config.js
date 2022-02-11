@@ -26,6 +26,9 @@ module.exports = {
       colors: {
         primary: "#6667AB",
       },
+      transitionTimingFunction: {
+        "both-xl": "cubic-bezier(0.75, 0, 0.25, 1)",
+      },
     },
   },
   plugins: [forms, lineClamp, aspectRatio, customPlugins],
