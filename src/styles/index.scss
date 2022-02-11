@@ -30,6 +30,11 @@
   }
 }
 
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 html,
 body,
 #root {
@@ -39,6 +44,10 @@ body,
 #root {
   @apply transition-all;
   font-family: "Spoqa Han Sans Neo", "sans-serif";
+}
+
+.main > div {
+  @apply overflow-y-auto;
 }
 
 button,
@@ -63,9 +72,4 @@ html.dark {
   input {
     @apply border-neutral-800 bg-neutral-900;
   }
-}
-
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }

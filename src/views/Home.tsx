@@ -1,15 +1,21 @@
 import * as React from "react";
 import { FC, CSSProperties, useState, useEffect, useRef } from "react";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { toggleTheme, setTheme } from "../store/modules/theme";
+import { useNavigate } from "react-router-dom";
 import { delay, changeObjectMembers } from "../helpers/utils";
 import Geul from "geul";
 
 const Home: FC = () => {
+  const navigate = useNavigate();
+
+  if (localStorage.getItem("intro") === "Y") {
+    navigate("/main");
+  }
+
   const { sqrt, pow, ceil } = Math;
 
   const logLabelElement = useRef(null);
 
+  /** dot animation */
   const diag = sqrt(pow(window.innerHeight, 2) + pow(window.innerWidth, 2));
   const dotSize = ceil(diag / (16 * 13)) * 13;
   const ratio = 1 / ceil(dotSize / 13);
@@ -22,6 +28,9 @@ const Home: FC = () => {
     transform: `scale(1)`,
     transitionDuration: `${dotShrinkDuration}ms`,
   });
+
+  /** fade animation */
+  const [faded, setFaded] = useState<boolean>(false);
 
   const onMounted = async () => {
     await delay(1000);
@@ -42,7 +51,12 @@ const Home: FC = () => {
     );
 
     const logLabel = new Geul("log", logLabelElement.current, 100);
-    logLabel.run();
+    await logLabel.run();
+    await delay(3000);
+    setFaded(true);
+    await delay(500);
+    localStorage.setItem("intro", "Y");
+    navigate("/main");
   };
 
   useEffect(() => {
@@ -51,7 +65,11 @@ const Home: FC = () => {
 
   return (
     <div className="w-full h-full flex-center flex-col overflow-hidden">
-      <div className="flex items-center">
+      <div
+        className={`flex items-center transition duration-500 ${
+          faded ? `opacity-0 transform -translate-y-12` : ""
+        }`}
+      >
         <div
           className="dot bg-foreground rounded-full transition-transform ease-both-xl"
           style={dotStyle}
