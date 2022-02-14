@@ -1,17 +1,17 @@
 import * as React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Home from "../views/Home";
 import Main from "../views/Main";
+import Article from "../views/Article";
 
 const AppRouter: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/main" element={<Main />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/main" element={<Main />} />
+      <Route path="/article/:id" element={<Article />} />
+    </Routes>
   );
 };
 
