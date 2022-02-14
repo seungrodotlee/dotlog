@@ -1,18 +1,33 @@
-import Test from "./markdown/test.md";
+import react from "./react";
+import Showdown from "showdown";
 
-export const MarkdownList = {
-  Test,
-};
+const markdownConverter = new Showdown.Converter();
 
-export const getArticle = (id) => {
-  return new Promise(async (res, rej) => {
-    try {
-      const fetched = await fetch(MarkdownList[id]);
-      const text = await fetched.text();
+export default { react };
 
-      res(text);
-    } catch (e) {
-      rej(e);
-    }
-  });
-};
+// export const useArticleList = async () => {
+//   const keys = Object.keys(ArticleList);
+//   const result = {};
+
+//   keys.forEach((k) => {
+//     const data = ArticleList[k];
+//     result[k] = {};
+
+//     data.forEach(async (d) => {
+//       const key = Object.keys(d[1])[0];
+//       const fetched = await fetch(d[1][key]);
+//       const text = await fetched.text();
+
+//       const pack = {
+//         title: d[0],
+//         html: markdownConverter.makeHtml(text),
+//       };
+
+//       result[k][key] = pack;
+//     });
+//   });
+
+//   console.log(result);
+
+//   return result;
+// };

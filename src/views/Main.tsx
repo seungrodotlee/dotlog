@@ -3,7 +3,6 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import noise from "../assets/img/noise.svg";
-
 import colors from "tailwindcss/colors";
 
 const Noise = styled.div`

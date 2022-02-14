@@ -1,22 +1,34 @@
 import * as React from "react";
-import { FC } from "react";
+import { FC, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { MarkdownList, getArticle } from "../articles";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { fetchArticleList } from "../store/modules/article";
 
 const Article: FC = () => {
-  const id = useParams();
+  const article = useAppSelector((state) => state.article.article);
+  const dispatch = useAppDispatch();
+
+  const { category, id } = useParams();
+  console.log(category, id);
 
   const onMounted = async () => {
-    const a = await getArticle("Test");
-
-    console.log(a);
+    await dispatch(fetchArticleList());
   };
 
-  console.log(MarkdownList);
+  useEffect(() => {
+    onMounted();
+  }, []);
 
-  onMounted();
-
-  return <div></div>;
+  return (
+    <div className="container">
+      <div
+        className=""
+        dangerouslySetInnerHTML={{
+          __html: article ? article[category][id].html : "",
+        }}
+      ></div>
+    </div>
+  );
 };
 
 export default Article;
