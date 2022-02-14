@@ -1,6 +1,8 @@
 import * as React from "react";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { fetchArticleList } from "../store/modules/article";
 
 import noise from "../assets/img/noise.svg";
 import colors from "tailwindcss/colors";
@@ -48,6 +50,18 @@ const Overlay = styled.div`
 `;
 
 const About: FC = () => {
+  const article = useAppSelector((state) => state.article.article);
+  const dispatch = useAppDispatch();
+
+  const onMounted = async () => {
+    await dispatch(fetchArticleList());
+    console.log(article);
+  };
+
+  useEffect(() => {
+    onMounted();
+  }, []);
+
   return (
     <div className="w-full h-full flex-col">
       <div className="absolute w-full h-48 bg-gradient-to-b from-black to-transparent"></div>
