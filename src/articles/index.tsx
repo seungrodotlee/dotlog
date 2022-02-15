@@ -1,7 +1,7 @@
 import beginning from "./dotlog/beginning.md"
 import about from "./react/about.md"
+import base from "./react/base.md"
 import jsx from "./react/jsx.md"
-import test from "./react/test.md"
 
 export default {
   dotlog: {
@@ -9,7 +9,7 @@ export default {
   },
   react: {
     about,
+    base,
     jsx,
-    test,
   },
 }
