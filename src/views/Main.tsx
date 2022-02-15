@@ -84,7 +84,11 @@ const About: FC = () => {
 
         const el = document.createElement("div");
         el.innerHTML = d;
-        const title = el.querySelector("h1").textContent;
+        const titleElement = el.querySelector("h1");
+
+        if (!titleElement) continue;
+
+        const title = titleElement.textContent;
         const subtitle = el.querySelector("h2");
         const text = subtitle ? subtitle.textContent : "";
 
@@ -105,19 +109,21 @@ const About: FC = () => {
       <div className="container relative !px-0 rounded-3xl overflow-hidden mb-36">
         <Noise />
         <Overlay className="bg-gradient-to-b from-neutral-700 to-neutral-400 min-h-screen"></Overlay>
-        {generated.map((g) => {
-          return (
-            <Link
-              to={g.path}
-              key={g.title}
-              className="flex flex-col article relative px-6 py-4"
-            >
-              <p className="text-sm font-thin">{g.category}</p>
-              <h3 className="text-[3rem] font-black">{g.title}</h3>
-              <p className="text-xl">{g.content}</p>
-            </Link>
-          );
-        })}
+        <div className="divide-y-2 divide-neutral-700 px-6">
+          {generated.map((g) => {
+            return (
+              <Link
+                to={g.path}
+                key={g.title}
+                className="flex flex-col article relative py-4"
+              >
+                <p className="text-sm font-thin">{g.category}</p>
+                <h3 className="text-[3rem] font-black">{g.title}</h3>
+                <p className="text-xl">{g.content}</p>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
