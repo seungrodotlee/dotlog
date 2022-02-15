@@ -1,11 +1,19 @@
 import * as React from "react";
-import { FC, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchArticleList } from "../store/modules/article";
 
 import noise from "../assets/img/noise.svg";
 import colors from "tailwindcss/colors";
+
+type ArticleListItem = {
+  path: string;
+  category: string;
+  title: string;
+  content: string;
+};
 
 const Noise = styled.div`
   position: absolute;
@@ -53,23 +61,63 @@ const About: FC = () => {
   const article = useAppSelector((state) => state.article.article);
   const dispatch = useAppDispatch();
 
+  let [generated, setGenerated] = useState<ArticleListItem[]>([]);
+
   const onMounted = async () => {
     await dispatch(fetchArticleList());
-    console.log(article);
   };
 
   useEffect(() => {
     onMounted();
   }, []);
 
+  useEffect(() => {
+    if (!article) return;
+
+    let list: ArticleListItem[] = [];
+
+    for (let cate in article) {
+      const data = article[cate];
+
+      for (let key in data) {
+        const d = data[key];
+
+        const el = document.createElement("div");
+        el.innerHTML = d;
+        const title = el.querySelector("h1").textContent;
+        const subtitle = el.querySelector("h2");
+        const text = subtitle ? subtitle.textContent : "";
+
+        list.push({
+          path: `/article/${cate}/${key}`,
+          title: title,
+          category: cate,
+          content: text,
+        });
+      }
+    }
+
+    setGenerated(list);
+  }, [article]);
+
   return (
     <div className="w-full h-full flex-col">
-      <div className="absolute w-full h-48 bg-gradient-to-b from-black to-transparent"></div>
-      <div className="container relative !px-0 mt-48 rounded-3xl overflow-hidden mb-36">
+      <div className="container relative !px-0 rounded-3xl overflow-hidden mb-36">
         <Noise />
-        <Overlay className="bg-gradient-to-b from-neutral-700 to-neutral-400"></Overlay>
-        <div className="w-full h-screen"></div>
-        <div className="w-full h-screen"></div>
+        <Overlay className="bg-gradient-to-b from-neutral-700 to-neutral-400 min-h-screen"></Overlay>
+        {generated.map((g) => {
+          return (
+            <Link
+              to={g.path}
+              key={g.title}
+              className="flex flex-col article relative px-6 py-4"
+            >
+              <p className="text-sm font-thin">{g.category}</p>
+              <h3 className="text-[3rem] font-black">{g.title}</h3>
+              <p className="text-xl">{g.content}</p>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

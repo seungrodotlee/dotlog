@@ -7,7 +7,7 @@ const markdownConverter = new Showdown.Converter();
 
 type ArticleType = {
   [key in string]: {
-    [key2 in string]: { title: string; html: string };
+    [key2 in string]: string;
   };
 };
 
@@ -27,30 +27,21 @@ export const fetchArticleList = createAsyncThunk<
 
   if (article) return article;
 
-  const keys = Object.keys(ArticleList);
   const result = {};
 
-  for (let i in keys) {
-    const k = keys[i];
-
+  for (let k in ArticleList) {
     const data = ArticleList[k];
     result[k] = {};
 
-    for (let idx in data) {
-      const d = data[idx];
+    for (let key in data) {
+      const d = data[key];
 
-      const key = Object.keys(d[1])[0];
-      const fetched = await fetch(d[1][key]);
+      const fetched = await fetch(d);
       const text = await fetched.text();
 
       const html: string = markdownConverter.makeHtml(text);
 
-      const pack = {
-        title: d[0],
-        html,
-      };
-
-      result[k][key] = pack;
+      result[k][key] = html;
     }
   }
 
