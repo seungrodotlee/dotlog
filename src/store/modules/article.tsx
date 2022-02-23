@@ -27,31 +27,10 @@ export const fetchArticleList = createAsyncThunk<
 
   if (article) return article;
 
-  // const result = {};
-
-  // for (let k in ArticleList) {
-  //   const data = ArticleList[k];
-  //   result[k] = {};
-
-  //   for (let key in data) {
-  //     const d = data[key];
-  //     console.log("d", d);
-
-  //     const fetched = await fetch(d);
-  //     const text = await fetched.text();
-
-  //     const html: string = markdownConverter.makeHtml(text);
-
-  //     result[k][key] = html;
-  //   }
-  // }
-
-  const callback = async (acc, curr, idx, origin) => {
+  const callback = async (acc: Promise<object>, curr) => {
     const result = await acc.then();
-    console.log("acc", result);
-    console.log("curr", curr);
     if (typeof curr[1] === "object") {
-      const sub = Object.entries(curr[1]);
+      const sub = Object.entries(curr[1]) as [string, string | object][];
 
       console.log("sub", sub);
 
@@ -61,12 +40,11 @@ export const fetchArticleList = createAsyncThunk<
 
       const pack = { ...result, ...reduced };
 
-      console.log("pack", pack);
       return pack;
     } else {
       const pack = { ...result };
 
-      const d = curr[1];
+      const d: string = curr[1];
       const fetched = await fetch(d);
       const text = await fetched.text();
 
@@ -74,14 +52,11 @@ export const fetchArticleList = createAsyncThunk<
 
       const reg = /\/([^\/]*)$/g;
       const filename = reg.exec(curr[0])[1];
-      const category = curr[0].replace("/" + filename, "");
-      console.log("fn", filename);
+      const category: string = curr[0].replace("/" + filename, "");
 
       pack[category] = pack[category] || {};
 
       pack[category][filename] = html;
-
-      console.log("pack", pack);
 
       return Promise.resolve(pack);
     }
@@ -89,10 +64,7 @@ export const fetchArticleList = createAsyncThunk<
 
   const entries = Object.entries(ArticleList);
 
-  console.log("entries", entries);
   const result = await entries.reduce(callback, Promise.resolve({}));
-
-  console.log(result);
 
   return result;
 });

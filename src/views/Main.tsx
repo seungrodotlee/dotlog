@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchArticleList } from "../store/modules/article";
 
 import noise from "../assets/img/noise.svg";
-import colors from "tailwindcss/colors";
 
 type ArticleListItem = {
   path: string;
@@ -57,11 +56,12 @@ const Overlay = styled.div`
   mix-blend-mode: multiply;
 `;
 
-const About: FC = () => {
+const Main: FC = () => {
   const article = useAppSelector((state) => state.article.article);
   const dispatch = useAppDispatch();
 
-  let [generated, setGenerated] = useState<ArticleListItem[]>([]);
+  const [generated, setGenerated] = useState<ArticleListItem[]>([]);
+  const [category, setCategory] = useState<string[]>([]);
 
   const onMounted = async () => {
     await dispatch(fetchArticleList());
@@ -73,6 +73,8 @@ const About: FC = () => {
 
   useEffect(() => {
     if (!article) return;
+
+    setCategory(Object.keys(article));
 
     let list: ArticleListItem[] = [];
 
@@ -106,20 +108,31 @@ const About: FC = () => {
 
   return (
     <div className="w-full h-full flex-col">
-      <div className="container relative !px-0 rounded-3xl overflow-hidden mb-36">
-        <Noise />
-        <Overlay className="bg-gradient-to-b from-neutral-700 to-neutral-400 min-h-screen"></Overlay>
-        <div className="divide-y-2 divide-neutral-700 px-6">
-          {generated.map((g) => {
+      <div className="container relative">
+        <div className="relative !px-0 rounded-3xl overflow-hidden mb-36">
+          <Noise />
+          <Overlay className="bg-gradient-to-b from-neutral-700 to-neutral-400 min-h-screen"></Overlay>
+          <div className="divide-y-2 divide-neutral-700 px-6">
+            {generated.map((g) => {
+              return (
+                <Link
+                  to={g.path}
+                  key={g.title}
+                  className="flex flex-col article relative py-4 opacity-60 hover:opacity-100 transition-opacity duration-500"
+                >
+                  <p className="text-sm font-thin">{g.category}</p>
+                  <h3 className="text-[2.25rem] font-black">{g.title}</h3>
+                  <p className="">{g.content}</p>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+        <div className="affix flex flex-col absolute left-full top-0">
+          {category.map((c, i) => {
             return (
-              <Link
-                to={g.path}
-                key={g.title}
-                className="flex flex-col article relative py-4 opacity-60 hover:opacity-100 transition-opacity duration-500"
-              >
-                <p className="text-sm font-thin">{g.category}</p>
-                <h3 className="text-[2.25rem] font-black">{g.title}</h3>
-                <p className="">{g.content}</p>
+              <Link to={`/articles/${c}`} key={i} className="text-sm">
+                {c}
               </Link>
             );
           })}
@@ -129,4 +142,4 @@ const About: FC = () => {
   );
 };
 
-export default About;
+export default Main;
