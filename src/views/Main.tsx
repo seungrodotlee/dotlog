@@ -115,11 +115,11 @@ const About: FC = () => {
               <Link
                 to={g.path}
                 key={g.title}
-                className="flex flex-col article relative py-4"
+                className="flex flex-col article relative py-4 opacity-60 hover:opacity-100 transition-opacity duration-500"
               >
                 <p className="text-sm font-thin">{g.category}</p>
-                <h3 className="text-[3rem] font-black">{g.title}</h3>
-                <p className="text-xl">{g.content}</p>
+                <h3 className="text-[2.25rem] font-black">{g.title}</h3>
+                <p className="">{g.content}</p>
               </Link>
             );
           })}
