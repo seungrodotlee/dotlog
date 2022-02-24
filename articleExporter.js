@@ -61,8 +61,9 @@ const generate = async () => {
       if (articles) {
         articles.forEach((a) => {
           const title = a.replace(".md", "");
+          const signaturedTitle = `${title}${parseInt(Math.random() * 100000)}`;
 
-          importSection += `import ${title} from "${folder.replace(
+          importSection += `import ${signaturedTitle} from "${folder.replace(
             "./src/articles",
             "."
           )}/${a}";\n`;
@@ -71,7 +72,7 @@ const generate = async () => {
             exportSection += " ";
           }
 
-          exportSection += `${title},\n`;
+          exportSection += `${title}: ${signaturedTitle},\n`;
         });
       }
 
@@ -101,3 +102,5 @@ const generate = async () => {
     }
   });
 };
+
+generate();
