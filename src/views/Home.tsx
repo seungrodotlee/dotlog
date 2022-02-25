@@ -7,10 +7,6 @@ import Geul from "geul";
 const Home: FC = () => {
   const navigate = useNavigate();
 
-  if (localStorage.getItem("intro") === "Y") {
-    navigate("/main");
-  }
-
   const { sqrt, pow, ceil } = Math;
 
   const logLabelElement = useRef(null);
@@ -33,6 +29,11 @@ const Home: FC = () => {
   const [faded, setFaded] = useState<boolean>(false);
 
   const onMounted = async () => {
+    if (localStorage.getItem("intro") === "Y") {
+      navigate("/articles", { state: { transition: "page-slide-up" } });
+      return;
+    }
+
     await delay(1000);
 
     setDotStyle(
@@ -56,7 +57,7 @@ const Home: FC = () => {
     setFaded(true);
     await delay(500);
     localStorage.setItem("intro", "Y");
-    navigate("/main");
+    navigate("/main", { state: { transition: "page-slide-up" } });
   };
 
   useEffect(() => {
@@ -70,11 +71,16 @@ const Home: FC = () => {
           faded ? `opacity-0 transform -translate-y-12` : ""
         }`}
       >
-        <div
-          className="dot bg-foreground rounded-full transition-transform ease-both-xl"
-          style={dotStyle}
-        ></div>
-        <p ref={logLabelElement} className="font-black text-[16rem] ml-2"></p>
+        {localStorage.getItem("intro") !== "Y" && (
+          <div
+            className="dot bg-foreground rounded-full transition-transform ease-both-xl"
+            style={dotStyle}
+          ></div>
+        )}
+
+        <p ref={logLabelElement} className="font-black text-[16rem] ml-2">
+          &nbsp;
+        </p>
       </div>
     </div>
   );

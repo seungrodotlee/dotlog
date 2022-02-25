@@ -73,3 +73,47 @@ html.dark {
     @apply border-neutral-800 bg-neutral-900;
   }
 }
+
+$slideDirectionMap: (
+  up: top,
+  left: left,
+  down: bottom,
+  right: right,
+);
+
+// html.dark .transition-grouper .bg-foreground {
+//   @apply bg-black;
+// }
+
+@each $dir, $val in $slideDirectionMap {
+  @debug $dir;
+  @debug $val;
+
+  .page-slide-#{$dir}-enter,
+  .page-slide-#{$dir}-exit {
+    @apply absolute top-0 left-0 w-full h-full;
+  }
+
+  .page-slide-#{$dir}-enter {
+    #{$val}: 100%;
+  }
+
+  .page-slide-#{$dir}-exit {
+    #{$val}: 0;
+  }
+
+  .page-slide-#{$dir}-enter-active,
+  .page-slide-#{$dir}-exit-active {
+    transition: $val;
+    transition-duration: 1s;
+    transition-timing-function: cubic-bezier(0.5, 0, 0.5, 1);
+  }
+
+  .page-slide-#{$dir}-enter-active {
+    #{$val}: 0;
+  }
+
+  .page-slide-#{$dir}-exit-active {
+    #{$val}: -100%;
+  }
+}

@@ -38,15 +38,17 @@ const Article: FC = () => {
   }, []);
 
   return (
-    <ArticleBox className="container">
-      <p className="text-sm font-thin">{category}</p>
-      <div
-        className=""
-        dangerouslySetInnerHTML={{
-          __html: article ? article[category][id] : "",
-        }}
-      ></div>
-    </ArticleBox>
+    <div className="w-full h-full">
+      <ArticleBox className="container">
+        <p className="text-sm font-thin">{category}</p>
+        <div
+          className=""
+          dangerouslySetInnerHTML={{
+            __html: article ? article[category][id] : "",
+          }}
+        ></div>
+      </ArticleBox>
+    </div>
   );
 };
 
