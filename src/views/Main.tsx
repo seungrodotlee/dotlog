@@ -122,20 +122,36 @@ const Main: FC = () => {
                 >
                   <p className="text-sm font-thin">{g.category}</p>
                   <h3 className="text-[2.25rem] font-black">{g.title}</h3>
-                  <p className="">{g.content}</p>
+                  {g.content ? (
+                    <p className="font-bold">{g.content}</p>
+                  ) : (
+                    <p className="font-bold">부제목이 없습니다 :(</p>
+                  )}
                 </Link>
               );
             })}
           </div>
         </div>
-        <div className="affix flex flex-col absolute left-full top-0">
+        <div className="affix flex flex-col absolute left-full top-2">
           {category.map((c, i) => {
             return (
-              <Link to={`/articles/${c}`} key={i} className="text-sm">
+              <Link
+                to={`/articles/${c}`}
+                key={i}
+                className="font-bold text-sm opacity-60 hover:opacity-100 transition-opacity duration-500"
+              >
                 {c}
               </Link>
             );
           })}
+          {category.length > 8 && (
+            <Link
+              to="/articles"
+              className="font-bold text-sm opacity-60 hover:opacity-100 transition-opacity duration-500"
+            >
+              {category.length - 8}개의 카테고리 더 보러가기
+            </Link>
+          )}
         </div>
       </div>
     </div>
