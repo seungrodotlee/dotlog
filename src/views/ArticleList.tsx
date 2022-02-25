@@ -129,6 +129,7 @@ const ArticleList: FC = () => {
                   to={g.path}
                   key={g.title}
                   className="flex flex-col article relative py-4 opacity-60 hover:opacity-100 transition-opacity duration-500"
+                  state={{ transition: "page-slide-up" }}
                 >
                   <p className="text-sm font-thin">{g.category}</p>
                   <h3 className="text-[2.25rem] font-black">{g.title}</h3>

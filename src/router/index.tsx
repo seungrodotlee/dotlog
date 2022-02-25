@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import styled from "styled-components";
-
 import Home from "../views/Home";
 import Main from "../views/Main";
 import Article from "../views/Article";
@@ -13,6 +13,7 @@ const TransitionElement = styled.div``;
 
 const AppRouter: React.FC = () => {
   const location = useLocation();
+
   const [prevLocation, setPrevLocation] = useState<string>();
   const [slideMode, setSlideMode] = useState<string>("");
 
@@ -31,8 +32,6 @@ const AppRouter: React.FC = () => {
       className="transition-grouper relative w-full h-full bg-black"
       component={TransitionElement}
       childFactory={(child) => {
-        console.log(location, child);
-
         return React.cloneElement(child, {
           classNames: location.state ? location.state["transition"] : "",
           timeout: 1000,

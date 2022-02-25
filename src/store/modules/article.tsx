@@ -32,8 +32,6 @@ export const fetchArticleList = createAsyncThunk<
     if (typeof curr[1] === "object") {
       const sub = Object.entries(curr[1]) as [string, string | object][];
 
-      console.log("sub", sub);
-
       const reduced = await sub
         .map((s) => [`${curr[0]}/${s[0]}`, s[1]])
         .reduce(callback, Promise.resolve({}));

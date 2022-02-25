@@ -45,7 +45,7 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!headerBlackList.includes(location.pathname)) {
+    if (!headerActived && !headerBlackList.includes(location.pathname)) {
       setHeaderActived(true);
       typeHeaderLabel();
     }
