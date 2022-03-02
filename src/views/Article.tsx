@@ -40,11 +40,11 @@ const Article: FC = () => {
   return (
     <div className="w-full h-full">
       <ArticleBox className="container">
-        <p className="text-sm font-thin">{category}</p>
+        <p className="text-sm font-thin">{category.replace("-", "/")}</p>
         <div
           className=""
           dangerouslySetInnerHTML={{
-            __html: article ? article[category][id] : "",
+            __html: article ? article[category.replace("-", "/")][id] : "",
           }}
         ></div>
       </ArticleBox>

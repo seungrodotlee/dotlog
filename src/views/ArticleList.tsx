@@ -101,7 +101,7 @@ const ArticleList: FC = () => {
         const text = subtitle ? subtitle.textContent : "";
 
         list.push({
-          path: `/article/${c}/${key}`,
+          path: `/article/${c.replace("/", "-")}/${key}`,
           title: title,
           category: c,
           content: text,
