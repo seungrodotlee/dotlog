@@ -56,7 +56,6 @@ const AppRouter: React.FC = () => {
   const [slideMode, setSlideMode] = useState<string>("");
 
   useEffect(() => {
-    console.log("location changed");
     let currentRoute, prevRoute;
 
     routes.forEach((r) => {
@@ -69,8 +68,6 @@ const AppRouter: React.FC = () => {
       }
     });
 
-    if (prevRoute === currentRoute) return;
-
     let direction;
     if (prevRoute && prevRoute.depth < currentRoute.depth) {
       if (
@@ -81,7 +78,7 @@ const AppRouter: React.FC = () => {
       } else {
         direction = "left";
       }
-    } else if (prevRoute) {
+    } else if (prevRoute && prevRoute.depth !== currentRoute.depth) {
       if (
         Math.pow(10, ("" + currentRoute.depth).length - 1) * 10 <=
         prevRoute.depth
@@ -94,6 +91,8 @@ const AppRouter: React.FC = () => {
 
     if (direction) {
       setSlideMode(`slide-${direction}`);
+    } else {
+      setSlideMode(null);
     }
 
     setFrom(location.pathname);
