@@ -1,13 +1,6 @@
 import * as React from "react";
-import { useEffect, useState, useLayoutEffect } from "react";
-import {
-  Routes,
-  Route,
-  useLocation,
-  useNavigationType,
-  matchPath,
-} from "react-router-dom";
-import { createBrowserHistory } from "history";
+import { useEffect, useState } from "react";
+import { Routes, Route, useLocation, matchPath } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import Home from "../views/Home";
@@ -50,7 +43,6 @@ const AppRouter: React.FC = () => {
   ];
 
   const location = useLocation();
-  const navigationType = useNavigationType();
 
   const [from, setFrom] = useState<string>();
   const [slideMode, setSlideMode] = useState<string>("");
