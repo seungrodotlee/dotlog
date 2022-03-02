@@ -56,7 +56,7 @@ const App: React.FC = () => {
       {headerActived && (
         <header className="w-full">
           <div className="flex justify-between container py-4">
-            <Link to="/main" className="logo flex items-center">
+            <Link to="/articles" className="logo flex items-center">
               <Dot className="w-4 h-4 bg-white rounded-full"></Dot>
               <p
                 ref={headerLabelElement}
