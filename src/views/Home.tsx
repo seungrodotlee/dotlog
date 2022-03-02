@@ -30,7 +30,7 @@ const Home: FC = () => {
 
   const onMounted = async () => {
     if (localStorage.getItem("intro") === "Y") {
-      navigate("/articles", { state: { transition: "page-slide-up" } });
+      navigate("/articles");
       return;
     }
 
@@ -57,7 +57,7 @@ const Home: FC = () => {
     setFaded(true);
     await delay(500);
     localStorage.setItem("intro", "Y");
-    navigate("/main", { state: { transition: "page-slide-up" } });
+    navigate("/main");
   };
 
   useEffect(() => {
