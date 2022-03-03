@@ -82,7 +82,6 @@ const AppRouter: React.FC = () => {
 
       if (paramsRegResult) {
         const str = paramsRegResult.reduce((acc, curr) => {
-          console.log(acc);
           return acc.replace(curr, "([a-zA-Z-]*)");
         }, currentRoute.path);
 

@@ -9,7 +9,6 @@ import AspectRatio from "../components/AspectRatio";
 
 const CategoryList: FC = () => {
   const params = useParams();
-  console.log(params);
 
   const article = useAppSelector((state) => state.article.article);
   const dispatch = useAppDispatch();
@@ -28,7 +27,6 @@ const CategoryList: FC = () => {
   useEffect(() => {
     if (!article) return;
 
-    console.log(article);
     const keys = Object.keys(article);
 
     if (params.parent) {
