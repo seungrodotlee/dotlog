@@ -1,8 +1,16 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Routes, Route, useLocation, matchPath } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useParams,
+  matchPath,
+} from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { useTitle } from "../hooks";
 import styled from "styled-components";
+
 import Home from "../views/Home";
 import ArticleList from "../views/ArticleList";
 import CategoryList from "../views/CategoryList";
@@ -15,26 +23,31 @@ const AppRouter: React.FC = () => {
     {
       path: "/",
       element: <Home />,
+      title: "dotlog",
       depth: 1,
     },
     {
       path: "/articles",
       element: <ArticleList />,
+      title: "dotlog - 글 목록",
       depth: 10,
     },
     {
       path: "/articles/:category",
       element: <ArticleList />,
+      title: "dotlog - +category+ 글 목록",
       depth: 10,
     },
     {
       path: "/category",
       element: <CategoryList />,
+      title: "dotlog - 카테고리 목록",
       depth: 11,
     },
     {
       path: "/category/:parent",
       element: <CategoryList />,
+      title: "dotlog - +parent+ 하위 카테고리 목록",
       depth: 11,
     },
     {
@@ -46,6 +59,7 @@ const AppRouter: React.FC = () => {
 
   const location = useLocation();
 
+  const setTitle = useTitle("dotlog");
   const [from, setFrom] = useState<string>();
   const [slideMode, setSlideMode] = useState<string>("");
 
@@ -61,6 +75,34 @@ const AppRouter: React.FC = () => {
         prevRoute = r;
       }
     });
+
+    if (currentRoute.title) {
+      const paramsReg = /\:[a-zA-Z\-]*/g;
+      const paramsRegResult: string[] = currentRoute.path.match(paramsReg);
+
+      if (paramsRegResult) {
+        const str = paramsRegResult.reduce((acc, curr) => {
+          console.log(acc);
+          return acc.replace(curr, "([a-zA-Z-]*)");
+        }, currentRoute.path);
+
+        const extractReg = new RegExp(str);
+
+        const extracted = extractReg.exec(location.pathname);
+        extracted.shift();
+
+        const title = paramsRegResult.reduce((acc, curr, idx) => {
+          return acc.replace(
+            `+${curr.replace(":", "")}+`,
+            extracted[idx].replace("-", "/")
+          );
+        }, currentRoute.title);
+
+        setTitle(title);
+      } else {
+        setTitle(currentRoute.title);
+      }
+    }
 
     let direction;
     if (prevRoute && prevRoute.depth < currentRoute.depth) {
