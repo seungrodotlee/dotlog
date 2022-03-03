@@ -51,9 +51,14 @@ const CategoryList: FC = () => {
                     ? `/category/${c}`
                     : `/articles/${c.replace("/", "-")}`
                 }
-                className="flex-center rounded-2xl bg-neutral-900"
+                className="flex-center flex-col relative rounded-2xl bg-neutral-900"
               >
                 {c}
+                {!params.parent && subCateogry.find((s) => s.includes(c)) && (
+                  <p className="absolute w-full text-center bottom-4 text-xs font-bold text-neutral-500">
+                    하위 카테고리가 있어요!
+                  </p>
+                )}
               </Link>
             </AspectRatio>
           );
