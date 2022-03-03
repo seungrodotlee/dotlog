@@ -57,7 +57,7 @@ const Home: FC = () => {
     setFaded(true);
     await delay(500);
     localStorage.setItem("intro", "Y");
-    navigate("/main");
+    navigate("/articles");
   };
 
   useEffect(() => {

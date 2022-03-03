@@ -30,10 +30,12 @@ const AppRouter: React.FC = () => {
     {
       path: "/category",
       element: <CategoryList />,
+      depth: 11,
     },
     {
       path: "/category/:parent",
       element: <CategoryList />,
+      depth: 11,
     },
     {
       path: "/article/:category/:id",

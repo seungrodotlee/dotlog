@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FC, useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchArticleList } from "../store/modules/article";
@@ -57,10 +57,11 @@ const Overlay = styled.div`
 `;
 
 const ArticleList: FC = () => {
+  const location = useLocation();
+  const params = useParams();
+
   const article = useAppSelector((state) => state.article.article);
   const dispatch = useAppDispatch();
-
-  const params = useParams();
 
   const [generated, setGenerated] = useState<ArticleListItem[]>([]);
   const [category, setCategory] = useState<string[]>([]);
@@ -81,7 +82,7 @@ const ArticleList: FC = () => {
     let list: ArticleListItem[] = [];
 
     const pushToList = (c: string) => {
-      if (params.category && !c.includes(params.category)) {
+      if (params.category && !c.includes(params.category.replace("-", "/"))) {
         return;
       }
 
@@ -143,24 +144,43 @@ const ArticleList: FC = () => {
             })}
           </div>
         </div>
-        <div className="affix flex flex-col absolute left-full top-2">
+        <div className="affix flex flex-col absolute left-full top-2 whitespace-nowrap">
+          <Link
+            to="/articles"
+            className={`font-bold text-sm ${
+              location.pathname === "/articles" ? "opacity-100" : "opacity-60"
+            } hover:opacity-100 transition-opacity duration-500`}
+          >
+            모든 글 보기
+          </Link>
           {category.map((c, i) => {
             return (
               <Link
-                to={`/articles/${c}`}
+                to={`/articles/${c.replace("/", "-")}`}
                 key={i}
-                className="font-bold text-sm opacity-60 hover:opacity-100 transition-opacity duration-500"
+                className={`font-bold text-sm ${
+                  location.pathname === `/articles/${c.replace("/", "-")}`
+                    ? "opacity-100"
+                    : "opacity-60"
+                } hover:opacity-100 transition-opacity duration-500`}
               >
                 {c}
               </Link>
             );
           })}
-          {category.length > 8 && (
+          {category.length > 8 ? (
             <Link
-              to="/articles"
+              to="/category"
               className="font-bold text-sm opacity-60 hover:opacity-100 transition-opacity duration-500"
             >
               {category.length - 8}개의 카테고리 더 보러가기
+            </Link>
+          ) : (
+            <Link
+              to="/category"
+              className="font-bold text-sm opacity-60 hover:opacity-100 transition-opacity duration-500"
+            >
+              카테고리 전체 보러가기
             </Link>
           )}
         </div>
