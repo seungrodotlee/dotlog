@@ -1,20 +1,22 @@
-import file275297 from "./dotlog/somefolder/file2.md";
-import beginning90025 from "./dotlog/beginning.md";
-import about1361 from "./react/about.md";
-import base45860 from "./react/base.md";
-import jsx54520 from "./react/jsx.md";
+import file210696 from "./dotlog/somefolder/file2.md";
+import beginning89665 from "./dotlog/beginning.md";
+import intro4438 from "./react/understand/intro.md";
+import VirtualDOM77457 from "./react/understand/VirtualDOM.md";
+import jsx19009 from "./react/jsx.md";
 
 const articles = {
   dotlog: {
     somefolder: {
-      file2: file275297,
+      file2: file210696,
     },
-    beginning: beginning90025,
+    beginning: beginning89665,
   },
   react: {
-    about: about1361,
-    base: base45860,
-    jsx: jsx54520,
+    understand: {
+      intro: intro4438,
+      VirtualDOM: VirtualDOM77457,
+    },
+    jsx: jsx19009,
   },
 };
 
