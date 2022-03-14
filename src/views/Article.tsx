@@ -16,10 +16,27 @@ const ArticleBox = styled.div`
 
   h2 {
     font-size: 1.25rem;
+    font-weight: 700;
     line-height: 1.75rem;
     padding-bottom: 1rem;
     border-bottom: 2px solid white;
     margin-bottom: 3rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1.125rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  strong {
+    font-weight: 700;
   }
 `;
 

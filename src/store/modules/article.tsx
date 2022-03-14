@@ -64,6 +64,7 @@ export const fetchArticleList = createAsyncThunk<
 
   const result = await entries.reduce(callback, Promise.resolve({}));
 
+  console.log(result);
   return result;
 });
 
